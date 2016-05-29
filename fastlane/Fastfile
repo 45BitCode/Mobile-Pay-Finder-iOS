@@ -18,7 +18,7 @@ default_platform :ios
 platform :ios do
   before_all do
     # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
-    #cocoapods
+    cocoapods
     
   end
 
@@ -34,7 +34,7 @@ platform :ios do
     #gym(scheme: "MobilePayFinder") # Build your app - more options available
     #pilot
 	#cocoapods
-	cert(development: true, output_path: "provisioning")
+	#cert(development: true, output_path: "provisioning")
     # sh "your_script.sh"
     # You can also use other beta testing services here (run `fastlane actions`)
   end

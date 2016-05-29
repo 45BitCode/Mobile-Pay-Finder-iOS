@@ -4,7 +4,7 @@
 # use_frameworks!
 
 target 'MobilePayFinder' do
-
+    pod 'CCHMapClusterController', '~> 1.7'
 end
 
 target 'MobilePayFinderTests' do
