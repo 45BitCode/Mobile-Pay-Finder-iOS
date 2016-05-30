@@ -85,6 +85,9 @@ platform :ios do
 	#fastlancert(development: true, output_path: "provisioning")
     # sh "your_script.sh"
     # You can also use other beta testing services here (run `fastlane actions`)
+    build_number = number_of_commits
+    version = "#{get_version_number}.#{build_number}"
+    badge(shield: "Build-#{version}-blue", alpha: false)
   end
 
   desc "Deploy a new version to the App Store"
