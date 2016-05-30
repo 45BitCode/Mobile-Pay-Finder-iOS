@@ -18,7 +18,7 @@ default_platform :ios
 platform :ios do
   before_all do
     ENV["SLACK_URL"] = "https://hooks.slack.com/services/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"
-    #cocoapods
+    cocoapods
     #sh "cd .. && cp ./ProvisioningProfiles/* /Library/Developer/XcodeServer/ProvisioningProfiles/"
   end
 
@@ -284,16 +284,10 @@ platform :ios do
 	#fastlancert(development: true, output_path: "provisioning")
     # sh "your_script.sh"
     # You can also use other beta testing services here (run `fastlane actions`)
-    sh "cd .. && cp ./assets/* ./MobilePayFinder/Assets.xcassets/AppIcon.appiconset/"
-    build_number = number_of_commits
-    version = "#{get_version_number}"
-    badge(
-    	shield: "#{version}-#{build_number}-orange", 
-    	alpha: false, 
-    	shield_no_resize: true, 
-    	dark: true
-    )
-    
+    #sh "cd .. && cp ./assets/* ./MobilePayFinder/Assets.xcassets/AppIcon.appiconset/"
+    #build_number = number_of_commits
+    #version = "#{get_version_number}.#{build_number}"
+    #badge(shield: "Build-#{version}-blue", alpha: false)
   end
 
   desc "Deploy a new version to the App Store"
