@@ -26,9 +26,55 @@ platform :ios do
   lane :test do
     scan
   end
+  
+  lane :provision do
 
-  desc "Submit a new Beta Build to Apple TestFlight"
-  desc "This will also make sure the profile is up to date"
+  	ENV['SIGH_APP_IDENTIFIER'] = 'fortyfivebitcode.applepayfinder'
+  	ENV['SIGH_OUTPUT_PATH'] = './ProvisioningProfiles'
+  	ENV['SIGH_USERNAME'] = "me@vincedavis.com"
+  	ENV['SIGH_SKIP_CERTIFICATE_VERIFICATION'] = 'true' # https://github.com/KrauseFx/sigh/issues/141
+
+  	ENV['FL_PROJECT_PROVISIONING_PROJECT_PATH'] = 'MobilePayFinder.xcodeproj'
+  	ENV['FL_PROJECT_PROVISIONING_PROFILE_TARGET_FILTER'] = '^MobilePayFinder$' # exact match in regex, we don't want e.g. XCSTutorialProject1Tests
+
+  	# create a folder for our provisioning profiles if not exists
+  	sh "cd .. && mkdir -p ProvisioningProfiles"
+
+  	# generate development profile
+  	profile_name = 'mobilepayfinder_app_dev'
+  	profile_file = "#{profile_name}.mobileprovision"
+  	profile_path = "./ProvisioningProfiles/#{profile_file}"
+  	udid_dev = sigh(
+  		provisioning_name: profile_name,
+  		filename: profile_file,
+  		development: true
+  		)
+
+  	# set the development profile in the project
+  	update_project_provisioning(
+  		profile: profile_path,
+  		build_configuration: 'Debug'
+  		)
+
+  	# generate appstore profile
+  	profile_name = 'mobilepayfinder_app_appstore'
+  	profile_file = "#{profile_name}.mobileprovision"
+  	profile_path = "./ProvisioningProfiles/#{profile_file}"
+  	udid_appstore = sigh(
+  		provisioning_name: profile_name,
+  		filename: profile_file
+  		)
+
+  	# set the appstore profile in the project
+  	update_project_provisioning(
+  		profile: profile_path,
+  		build_configuration: 'Release'
+  		)
+
+  end
+
+  #desc "Submit a new Beta Build to Apple TestFlight"
+  #desc "This will also make sure the profile is up to date"
   lane :beta do
     # match(type: "appstore") # more information: https://codesigning.guide
     #gym(scheme: "MobilePayFinder") # Build your app - more options available
