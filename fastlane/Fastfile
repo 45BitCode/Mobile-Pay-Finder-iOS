@@ -17,7 +17,7 @@ default_platform :ios
 
 platform :ios do
   before_all do
-    # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
+    ENV["SLACK_URL"] = "https://hooks.slack.com/services/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"
     cocoapods
     #sh "cd .. && cp ./ProvisioningProfiles/* /Library/Developer/XcodeServer/ProvisioningProfiles/"
   end
@@ -101,16 +101,16 @@ platform :ios do
   after_all do |lane|
     # This block is called, only if the executed lane was successful
 
-    # slack(
-    #   message: "Successfully deployed new App Update."
-    # )
+    slack(
+       message: "Successful Lane Build"
+    )
   end
 
   error do |lane, exception|
-    # slack(
-    #   message: exception.message,
-    #   success: false
-    # )
+    slack(
+       message: exception.message,
+       success: false
+    )
   end
 end
 

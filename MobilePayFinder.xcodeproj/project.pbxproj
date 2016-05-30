@@ -504,10 +504,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Vincent Davis (68TANLH3PX)";
 				INFOPLIST_FILE = MobilePayFinderTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = fortyfivebitcode.applepayfinder.MobilePayFinderTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "ccd0ed3b-58b1-47f1-94be-f30fae1b6889";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MobilePayFinder.app/MobilePayFinder";
 			};
 			name = Debug;
@@ -516,10 +518,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Vincent Davis (SP7UUHBXPL)";
 				INFOPLIST_FILE = MobilePayFinderTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = fortyfivebitcode.applepayfinder.MobilePayFinderTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "5d361c09-fe68-4000-80bf-a461a593e353";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MobilePayFinder.app/MobilePayFinder";
 			};
 			name = Release;
@@ -527,10 +531,12 @@
 		6107D7F91CFA28D2004481F8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Vincent Davis (68TANLH3PX)";
 				INFOPLIST_FILE = MobilePayFinderUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = fortyfivebitcode.applepayfinder.MobilePayFinderUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "ccd0ed3b-58b1-47f1-94be-f30fae1b6889";
 				TEST_TARGET_NAME = MobilePayFinder;
 			};
 			name = Debug;
@@ -538,10 +544,12 @@
 		6107D7FA1CFA28D2004481F8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Vincent Davis (SP7UUHBXPL)";
 				INFOPLIST_FILE = MobilePayFinderUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = fortyfivebitcode.applepayfinder.MobilePayFinderUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "5d361c09-fe68-4000-80bf-a461a593e353";
 				TEST_TARGET_NAME = MobilePayFinder;
 			};
 			name = Release;
