@@ -496,7 +496,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = fortyfivebitcode.applepayfinder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c28cfdbb-a470-490d-8687-9639a3627e44";
+				PROVISIONING_PROFILE = "5d361c09-fe68-4000-80bf-a461a593e353";
 			};
 			name = Release;
 		};
