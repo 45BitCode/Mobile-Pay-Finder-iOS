@@ -18,7 +18,7 @@ default_platform :ios
 platform :ios do
   before_all do
     ENV["SLACK_URL"] = "https://hooks.slack.com/services/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"
-    cocoapods
+    #cocoapods
     #sh "cd .. && cp ./ProvisioningProfiles/* /Library/Developer/XcodeServer/ProvisioningProfiles/"
   end
 
@@ -27,24 +27,34 @@ platform :ios do
     scan
   end
   
+  lane :app_ids do
+  
+  end
+  
   lane :provision do
 
+	project_name = "MobilePayFinder"
+	
   	ENV['SIGH_APP_IDENTIFIER'] = 'fortyfivebitcode.applepayfinder'
   	ENV['SIGH_OUTPUT_PATH'] = './ProvisioningProfiles'
   	ENV['SIGH_USERNAME'] = "me@vincedavis.com"
   	ENV['SIGH_SKIP_CERTIFICATE_VERIFICATION'] = 'true' # https://github.com/KrauseFx/sigh/issues/141
 
-  	ENV['FL_PROJECT_PROVISIONING_PROJECT_PATH'] = 'MobilePayFinder.xcodeproj'
-  	ENV['FL_PROJECT_PROVISIONING_PROFILE_TARGET_FILTER'] = '^MobilePayFinder$' # exact match in regex, we don't want e.g. XCSTutorialProject1Tests
+  	ENV['FL_PROJECT_PROVISIONING_PROJECT_PATH'] = "#{project_name}.xcodeproj"
+  	#ENV['FL_PROJECT_PROVISIONING_PROFILE_TARGET_FILTER'] = '^MobilePayFinder$' # exact match in regex, we don't want e.g. XCSTutorialProject1Tests
 
   	# create a folder for our provisioning profiles if not exists
   	sh "cd .. && mkdir -p ProvisioningProfiles"
+  	
+  	
+  	app_indentifier = ENV['SIGH_APP_IDENTIFIER']
 
   	# generate development profile
-  	profile_name = 'mobilepayfinder_app_dev'
+  	profile_name = "#{project_name}_app_dev"
   	profile_file = "#{profile_name}.mobileprovision"
   	profile_path = "./ProvisioningProfiles/#{profile_file}"
   	udid_dev = sigh(
+  		app_identifier: "#{app_indentifier}",
   		provisioning_name: profile_name,
   		filename: profile_file,
   		development: true
@@ -52,25 +62,214 @@ platform :ios do
 
   	# set the development profile in the project
   	update_project_provisioning(
+  		xcodeproj: "#{project_name}.xcodeproj",
   		profile: profile_path,
+  		target_filter: ".*MobilePayFinder.*",
   		build_configuration: 'Debug'
   		)
 
   	# generate appstore profile
-  	profile_name = 'mobilepayfinder_app_appstore'
+  	profile_name = "#{project_name}_app_appstore"
   	profile_file = "#{profile_name}.mobileprovision"
   	profile_path = "./ProvisioningProfiles/#{profile_file}"
   	udid_appstore = sigh(
+  		app_identifier: "#{app_indentifier}",
   		provisioning_name: profile_name,
   		filename: profile_file
   		)
 
   	# set the appstore profile in the project
   	update_project_provisioning(
+  		xcodeproj: "#{project_name}.xcodeproj",
   		profile: profile_path,
+  		target_filter: ".*MobilePayFinder.*",
+  		build_configuration: 'Release'
+  		)
+  		
+  	# generate TV Dev profile
+  	profile_name = "#{project_name}_tv_dev"
+  	profile_file = "#{profile_name}.mobileprovision"
+  	profile_path = "./ProvisioningProfiles/#{profile_file}"
+  	udid_tv_dev = sigh(
+  		app_identifier: "#{app_indentifier}.TV",
+  		provisioning_name: profile_name,
+  		filename: profile_file,
+  		development: true
+  		)
+
+  	# set the TV Dev profile in the project
+  	update_project_provisioning(
+  		xcodeproj: "#{project_name}.xcodeproj",
+  		profile: profile_path,
+  		target_filter: ".*TV.*",
+  		build_configuration: 'Debug'
+  		)
+  		
+  	# generate TV appstore profile
+  	profile_name = "#{project_name}_tv_appstore"
+  	profile_file = "#{profile_name}.mobileprovision"
+  	profile_path = "./ProvisioningProfiles/#{profile_file}"
+  	udid_tv_appstore = sigh(
+  		app_identifier: "#{app_indentifier}.TV",
+  		provisioning_name: profile_name,
+  		filename: profile_file
+  		)
+
+  	# set the TV appstore profile in the project
+  	update_project_provisioning(
+  		xcodeproj: "#{project_name}.xcodeproj",
+  		profile: profile_path,
+  		target_filter: ".*TV.*",
+  		build_configuration: 'Release'
+  		)
+  		
+  	# generate Watch App Dev profile
+  	profile_name = "#{project_name}_watch_app_dev"
+  	profile_file = "#{profile_name}.mobileprovision"
+  	profile_path = "./ProvisioningProfiles/#{profile_file}"
+  	udid_watch_app_dev = sigh(
+  		app_identifier: "#{app_indentifier}.watchkitapp",
+  		provisioning_name: profile_name,
+  		filename: profile_file,
+  		development: true
+  		)
+
+  	# set the Watch App Dev profile in the project
+  	update_project_provisioning(
+  		xcodeproj: "#{project_name}.xcodeproj",
+  		profile: profile_path,
+  		target_filter: "^Watch$",
+  		build_configuration: 'Debug'
+  		)
+  		
+  	# generate Watch App Appstore profile
+  	profile_name = "#{project_name}_watch_app_appstore"
+  	profile_file = "#{profile_name}.mobileprovision"
+  	profile_path = "./ProvisioningProfiles/#{profile_file}"
+  	udid_watch_app_appstore = sigh(
+  		app_identifier: "#{app_indentifier}.watchkitapp",
+  		provisioning_name: profile_name,
+  		filename: profile_file
+  		)
+
+  	# set the Watch App Dev profile in the project
+  	update_project_provisioning(
+  		xcodeproj: "#{project_name}.xcodeproj",
+  		profile: profile_path,
+  		target_filter: "^Watch$",
   		build_configuration: 'Release'
   		)
 
+  	# generate Watch Ext Dev profile
+  	profile_name = "#{project_name}_watch_ext_dev"
+  	profile_file = "#{profile_name}.mobileprovision"
+  	profile_path = "./ProvisioningProfiles/#{profile_file}"
+  	udid_watch_ext_dev = sigh(
+  		app_identifier: "#{app_indentifier}.watchkitapp.watchkitextension",
+  		provisioning_name: profile_name,
+  		filename: profile_file,
+  		development: true
+  		)
+
+  	# set the Watch Ext Dev profile in the project
+  	update_project_provisioning(
+  		xcodeproj: "#{project_name}.xcodeproj",
+  		profile: profile_path,
+  		target_filter: "^Watch Extension$",
+  		build_configuration: 'Debug'
+  		)
+  		
+  	# generate Watch Ext Appstore profile
+  	profile_name = "#{project_name}_watch_ext_appstore"
+  	profile_file = "#{profile_name}.mobileprovision"
+  	profile_path = "./ProvisioningProfiles/#{profile_file}"
+  	udid_watch_ext_appstore = sigh(
+  		app_identifier: "#{app_indentifier}.watchkitapp.watchkitextension",
+  		provisioning_name: profile_name,
+  		filename: profile_file
+  		)
+
+  	# set the Watch Ext Appstore profile in the project
+  	update_project_provisioning(
+  		xcodeproj: "#{project_name}.xcodeproj",
+  		profile: profile_path,
+  		target_filter: "^Watch Extension$",
+  		build_configuration: 'Release'
+  		)
+  		
+  	# generate Today Ext Dev profile
+  	profile_name = "#{project_name}_today_ext_dev"
+  	profile_file = "#{profile_name}.mobileprovision"
+  	profile_path = "./ProvisioningProfiles/#{profile_file}"
+  	udid_today_ext_dev = sigh(
+  		app_identifier: "#{app_indentifier}.Today",
+  		provisioning_name: profile_name,
+  		filename: profile_file,
+  		development: true
+  		)
+
+  	# set the Today Ext Dev profile in the project
+  	update_project_provisioning(
+  		xcodeproj: "#{project_name}.xcodeproj",
+  		profile: profile_path,
+  		target_filter: "^Today$",
+  		build_configuration: 'Debug'
+  		)
+  		
+  	# generate Today Ext Appstore profile
+  	profile_name = "#{project_name}_today_ext_appstore"
+  	profile_file = "#{profile_name}.mobileprovision"
+  	profile_path = "./ProvisioningProfiles/#{profile_file}"
+  	udid_today_ext_appstore = sigh(
+  		app_identifier: "#{app_indentifier}.Today",
+  		provisioning_name: profile_name,
+  		filename: profile_file
+  		)
+
+  	# set the Today Ext Appstore profile in the project
+  	update_project_provisioning(
+  		xcodeproj: "#{project_name}.xcodeproj",
+  		profile: profile_path,
+  		target_filter: "^Today$",
+  		build_configuration: 'Release'
+  		)
+  		
+  	# generate Action Ext Dev profile
+  	profile_name = "#{project_name}_action_ext_dev"
+  	profile_file = "#{profile_name}.mobileprovision"
+  	profile_path = "./ProvisioningProfiles/#{profile_file}"
+  	udid_action_ext_dev = sigh(
+  		app_identifier: "#{app_indentifier}.Action",
+  		provisioning_name: profile_name,
+  		filename: profile_file,
+  		development: true
+  		)
+
+  	# set the Action Ext Dev profile in the project
+  	update_project_provisioning(
+  		xcodeproj: "#{project_name}.xcodeproj",
+  		profile: profile_path,
+  		target_filter: "^Action$",
+  		build_configuration: 'Debug'
+  		)
+  		
+  	# generate Action Ext Appstore profile
+  	profile_name = "#{project_name}_action_ext_appstore"
+  	profile_file = "#{profile_name}.mobileprovision"
+  	profile_path = "./ProvisioningProfiles/#{profile_file}"
+  	udid_action_ext_appstore = sigh(
+  		app_identifier: "#{app_indentifier}.Action",
+  		provisioning_name: profile_name,
+  		filename: profile_file
+  		)
+
+  	# set the Action Ext Appstore profile in the project
+  	update_project_provisioning(
+  		xcodeproj: "#{project_name}.xcodeproj",
+  		profile: profile_path,
+  		target_filter: "^Action$",
+  		build_configuration: 'Release'
+  		)
   end
 
   #desc "Submit a new Beta Build to Apple TestFlight"
@@ -85,9 +284,16 @@ platform :ios do
 	#fastlancert(development: true, output_path: "provisioning")
     # sh "your_script.sh"
     # You can also use other beta testing services here (run `fastlane actions`)
+    sh "cd .. && cp ./assets/* ./MobilePayFinder/Assets.xcassets/AppIcon.appiconset/"
     build_number = number_of_commits
-    version = "#{get_version_number}.#{build_number}"
-    badge(shield: "Build-#{version}-blue", alpha: false)
+    version = "#{get_version_number}"
+    badge(
+    	shield: "#{version}-#{build_number}-orange", 
+    	alpha: false, 
+    	shield_no_resize: true, 
+    	dark: true
+    )
+    
   end
 
   desc "Deploy a new version to the App Store"
