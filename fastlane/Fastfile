@@ -18,7 +18,7 @@ default_platform :ios
 platform :ios do
   before_all do
     ENV["SLACK_URL"] = "https://hooks.slack.com/services/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"
-    cocoapods
+    #cocoapods
     #sh "cd .. && cp ./ProvisioningProfiles/* /Library/Developer/XcodeServer/ProvisioningProfiles/"
   end
 
